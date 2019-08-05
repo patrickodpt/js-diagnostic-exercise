@@ -42,3 +42,8 @@ body {
   background-color: #F52F4F;
   color: #FFFFFF;
 }
+
+#notify-text {
+  text-align: center;
+  visibility: hidden;
+}

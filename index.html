@@ -13,7 +13,7 @@
 
     <div id="checking" class="account">
       <h2>Checking</h2>
-      <div class="balance">$0</div>
+      <div class="balance">$<span>0</span></div>
       <input class="input" type="text" placeholder="enter an amount" />
       <input class="deposit" type="button" value="Deposit" />
       <input class="withdraw" type="button" value="Withdraw" />
@@ -21,10 +21,14 @@
 
     <div id="savings" class="account">
       <h2>Savings</h2>
-      <div class="balance">$0</div>
-      <input class="input" type="text" placeholder="enter an amount" />
+      <div class="balance">$<span>0<span></div>
+      <input class="input" type="text" placeholder="enter an amount"/>
       <input class="deposit" type="button" value="Deposit" />
       <input class="withdraw" type="button" value="Withdraw" />
+    </div>
+
+    <div class="notify">
+      <span id="notify-text" class="empty">THIS IS TEST</span>
     </div>
 
     <script defer src="app.js"></script>
