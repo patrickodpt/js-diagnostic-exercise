@@ -1,5 +1,8 @@
 console.log("Hello from app.js")
 
+let inputAsInt; //global variable to be striped of '$' and a whole number
+
+
 //update balance on click of deposit:
 let savingsBalance = parseInt(document.querySelector('#savings > .balance > span').innerText)
 let checkingBalance = parseInt(document.querySelector('#checking > .balance > span').innerText)
@@ -30,6 +33,7 @@ function notifyUser(notification) {
   document.querySelector('#notify-text').style.color = "red"
   console.log('notifyUser was called')
 }
+
 function depositMoney() {
   let inputAsInt = parseInt(document.querySelector(`#${event.target.parentNode.id} > .input`).value)
   //check integer >0
@@ -53,6 +57,7 @@ function withdrawMoney() {
   if (inputAsInt > 0 && event.target.parentNode.id == 'savings') {
     if (inputAsInt <= savingsBalance) {
       savingsBalance -= inputAsInt
+
       document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = savingsBalance
       document.querySelector('#notify-text').style.visibility = "hidden"
     } else {
@@ -69,4 +74,10 @@ function withdrawMoney() {
   } else {
     notifyUser('PLEASE ENTER A WHOLE NUMBER >0')
     }
+}
+
+function checkInput() {
+  userInput = document.querySelector(`#${event.target.parentNode.id} > .input`).value
+
+  inputAsInt = parseInt(userInput)
 }
