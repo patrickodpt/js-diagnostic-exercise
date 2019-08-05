@@ -13,48 +13,13 @@ document.querySelector('#checking > .withdraw').addEventListener('click', adjust
 
 function adjustBalance () {
   //get inputed value and convert to integer
-// TEST::::::::  console.log(event.target.parentNode.id) //chec how to access id
-
   // if deposit is clicked
   if (event.target.className == 'deposit') {
-    //may convert below to a "deposit function"
-    //need to check for parentNode.id
-    let inputAsInt = parseInt(document.querySelector(`#${event.target.parentNode.id} > .input`).value)
-    //check integer >0
-    if (inputAsInt > 0 && event.target.parentNode.id == 'savings') {
-      savingsBalance += inputAsInt
-      document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = savingsBalance
-    } else if (inputAsInt > 0 && event.target.parentNode.id == 'checking') {
-      checkingBalance += inputAsInt
-      document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = checkingBalance
-    } else {
-      // tell user to please input a value greater than
-      notifyUser('PLEASE ENTER A WHOLE NUMBER >0')
-    }
+    depositMoney()
   }
-
   //if withdraw is clicked
   if (event.target.className == 'withdraw') {
-    //need to check for parentNode.id
-    let inputAsInt = parseInt(document.querySelector(`#${event.target.parentNode.id} > .input`).value)
-    //check integer >0
-    if (inputAsInt > 0 && event.target.parentNode.id == 'savings') {
-      if (inputAsInt <= savingsBalance) {
-        savingsBalance -= inputAsInt
-        document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = savingsBalance
-      } else {
-        notifyUser('YOU HAVE INSUFFICIENT FUNDS')
-      }
-    } else if (inputAsInt > 0 && event.target.parentNode.id == 'checking') {
-      if (inputAsInt <= checkingBalance) {
-        checkingBalance -= inputAsInt
-        document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = checkingBalance
-      } else {
-        notifyUser('YOU HAVE INSUFFICIENT FUNDS')
-      }
-    } else {
-      notifyUser('PLEASE ENTER A WHOLE NUMBER >0')
-      }
+    withdrawMoney()
   }
 }
 
@@ -62,5 +27,46 @@ function adjustBalance () {
 function notifyUser(notification) {
   document.querySelector('#notify-text').innerText = notification
   document.querySelector('#notify-text').style.visibility = "visible"
+  document.querySelector('#notify-text').style.color = "red"
   console.log('notifyUser was called')
+}
+function depositMoney() {
+  let inputAsInt = parseInt(document.querySelector(`#${event.target.parentNode.id} > .input`).value)
+  //check integer >0
+  if (inputAsInt > 0 && event.target.parentNode.id == 'savings') {
+    savingsBalance += inputAsInt
+    document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = savingsBalance
+    document.querySelector('#notify-text').style.visibility = "hidden"
+  } else if (inputAsInt > 0 && event.target.parentNode.id == 'checking') {
+    checkingBalance += inputAsInt
+    document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = checkingBalance
+    document.querySelector('#notify-text').style.visibility = "hidden"
+  } else {
+    // tell user to please input a value greater than
+    notifyUser('PLEASE ENTER A WHOLE NUMBER >0')
+  }
+}
+
+function withdrawMoney() {
+  let inputAsInt = parseInt(document.querySelector(`#${event.target.parentNode.id} > .input`).value)
+  //check integer >0
+  if (inputAsInt > 0 && event.target.parentNode.id == 'savings') {
+    if (inputAsInt <= savingsBalance) {
+      savingsBalance -= inputAsInt
+      document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = savingsBalance
+      document.querySelector('#notify-text').style.visibility = "hidden"
+    } else {
+      notifyUser('YOU HAVE INSUFFICIENT FUNDS')
+    }
+  } else if (inputAsInt > 0 && event.target.parentNode.id == 'checking') {
+    if (inputAsInt <= checkingBalance) {
+      checkingBalance -= inputAsInt
+      document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = checkingBalance
+      document.querySelector('#notify-text').style.visibility = "hidden"
+    } else {
+      notifyUser('YOU HAVE INSUFFICIENT FUNDS')
+    }
+  } else {
+    notifyUser('PLEASE ENTER A WHOLE NUMBER >0')
+    }
 }
