@@ -1,6 +1,6 @@
 console.log("Hello from app.js")
 
-let inputAsInt; //global variable to be striped of '$' and a whole number
+// let inputAsInt; //global variable to be striped of '$' and a whole number
 
 //update balance on click of deposit:
 let savingsBalance = parseInt(document.querySelector('#savings > .balance > span').innerText)
@@ -24,7 +24,7 @@ function adjustBalance () {
     withdrawMoney()
   }
 }
-//funtion that sends notifications to user
+//funtion that sends a passed notification to user
 function notifyUser(notification) {
   document.querySelector('#notify-text').innerText = notification
   document.querySelector('#notify-text').style.visibility = "visible"
@@ -33,16 +33,18 @@ function notifyUser(notification) {
 
 //function that deposits money
 function depositMoney() {
-  inputAsInt = parseInt(document.querySelector(`#${event.target.parentNode.id} > .input`).value)
+  let inputAsInt = parseInt(document.querySelector(`#${event.target.parentNode.id} > .input`).value)
   //check integer >0
   if (inputAsInt > 0 && event.target.parentNode.id == 'savings') {
     savingsBalance += inputAsInt
-    document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = savingsBalance
-    document.querySelector('#notify-text').style.visibility = "hidden"
+    visualizeBalance(savingsBalance)
+    hideNotification()
+    moneyColor("#6C9A74")
   } else if (inputAsInt > 0 && event.target.parentNode.id == 'checking') {
     checkingBalance += inputAsInt
-    document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = checkingBalance
-    document.querySelector('#notify-text').style.visibility = "hidden"
+    visualizeBalance(checkingBalance)
+    hideNotification()
+    moneyColor("#6C9A74")
   } else {
     // tell user to please input a value greater than
     notifyUser('PLEASE ENTER A WHOLE NUMBER >0')
@@ -56,21 +58,35 @@ function withdrawMoney() {
   if (inputAsInt > 0 && event.target.parentNode.id == 'savings') {
     if (inputAsInt <= savingsBalance) {
       savingsBalance -= inputAsInt
-
-      document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = savingsBalance
-      document.querySelector('#notify-text').style.visibility = "hidden"
+      visualizeBalance(savingsBalance)
+      hideNotification()
+      moneyColor("#6C9A74")
     } else {
+      moneyColor("#F52F4F")
       notifyUser('YOU HAVE INSUFFICIENT FUNDS')
     }
   } else if (inputAsInt > 0 && event.target.parentNode.id == 'checking') {
     if (inputAsInt <= checkingBalance) {
       checkingBalance -= inputAsInt
-      document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = checkingBalance
-      document.querySelector('#notify-text').style.visibility = "hidden"
+      visualizeBalance(checkingBalance)
+      hideNotification()
     } else {
+      moneyColor("#F52F4F")
       notifyUser('YOU HAVE INSUFFICIENT FUNDS')
     }
   } else {
     notifyUser('PLEASE ENTER A WHOLE NUMBER >0')
     }
+}
+
+function moneyColor(color = "green") {
+  document.querySelector(`#${event.target.parentNode.id}`).style['background-color'] = color
+}
+
+function hideNotification() {
+  document.querySelector('#notify-text').style.visibility = "hidden"
+}
+
+function visualizeBalance(balance) {
+  document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = balance
 }
