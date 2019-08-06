@@ -1,5 +1,6 @@
 console.log("THIS IS A TEST VERSION")
 
+//TODO: INTEGRATE SAVINGS
 let savingsAccount = {
   name: "Savings Account",
   amount: 0,
@@ -15,24 +16,48 @@ let savingsAccount = {
   },
 }
 
+
+
+
+let checkingCustomerInput = parseInt(document.querySelector('#checking-input').value)
+console.log(checkingCustomerInput)
+
+
+//WORKING ON CHECKING
 let checkingAccount = {
   name: "Checking Account",
   amount: 0,
-  withdraw: function (requestedAmount) {
+  customerInput: checkingCustomerInput,
+  withdrawFunc: function (requestedAmount) {
     if (this.amount > requestedAmount) {
       return this.amount -= requestedAmount
     } else {
       return requestedAmount
     }
   },
-  deposit: function (providedAmount) {
+  withdrawButton: document.querySelector('#checking-withdraw'),
+  depositFunc: function (providedAmount) {
       return this.amount += providedAmount
   },
+  depositButton: document.querySelector('#checking-deposit'),
 }
+
+function checkingDespoitFunction(value) {
+  checkingAccount.depositFunc(value)
+  console.log("CHECKING DEPOSIT BUTTON WAS CLICKED")
+}
+
+//get input from user:
+// document.querySelector('#savings > .deposit').addEventListener('click', adjustBalance)
+// document.querySelector('#savings > .withdraw').addEventListener('click', adjustBalance)
+checkingAccount.depositButton.addEventListener('click', checkingDespoitFunction(200))
+// checkingAccount.withdrawButton.addEventListener('click', checkingAccount.withdrawFunc(checkingAccount.customerInput))
+
+
 
 console.log(checkingAccount.name)
 console.log(checkingAccount.amount)
-console.log(checkingAccount.deposit(200))
+console.log(checkingAccount.depositFunc(200))
 console.log(checkingAccount.amount)
 
 
