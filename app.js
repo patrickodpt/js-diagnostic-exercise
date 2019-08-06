@@ -1,7 +1,5 @@
 console.log("Hello from app.js")
 
-// let inputAsInt; //global variable to be striped of '$' and a whole number
-
 //update balance on click of deposit:
 let savingsBalance = parseInt(document.querySelector('#savings > .balance > span').innerText)
 let checkingBalance = parseInt(document.querySelector('#checking > .balance > span').innerText)
@@ -13,8 +11,8 @@ document.querySelector('#savings > .withdraw').addEventListener('click', adjustB
 document.querySelector('#checking > .deposit').addEventListener('click', adjustBalance)
 document.querySelector('#checking > .withdraw').addEventListener('click', adjustBalance)
 
+// determine which function to run when clicked
 function adjustBalance () {
-  //get inputed value and convert to integer
   // if deposit is clicked
   if (event.target.className == 'deposit') {
     depositMoney()
@@ -24,7 +22,7 @@ function adjustBalance () {
     withdrawMoney()
   }
 }
-//funtion that sends a passed notification to user
+//funtion that displays a passed notification to user
 function notifyUser(notification) {
   document.querySelector('#notify-text').innerText = notification
   document.querySelector('#notify-text').style.visibility = "visible"
@@ -33,16 +31,21 @@ function notifyUser(notification) {
 
 //function that deposits money
 function depositMoney() {
+  //get input from user and set as integer
   let inputAsInt = parseInt(document.querySelector(`#${event.target.parentNode.id} > .input`).value)
-  //check integer >0
+  //check integer >0 and for which id called function
   if (inputAsInt > 0 && event.target.parentNode.id == 'savings') {
     savingsBalance += inputAsInt
+    //below inserts balance into span to be displayed
     visualizeBalance(savingsBalance)
+    //if function successfully ran, hide previous user notifcations
     hideNotification()
     moneyColor("#6C9A74")
   } else if (inputAsInt > 0 && event.target.parentNode.id == 'checking') {
     checkingBalance += inputAsInt
+    //below inserts balance into span to be displayed
     visualizeBalance(checkingBalance)
+    //if function successfully ran, hide previous user notifcations
     hideNotification()
     moneyColor("#6C9A74")
   } else {
@@ -58,7 +61,9 @@ function withdrawMoney() {
   if (inputAsInt > 0 && event.target.parentNode.id == 'savings') {
     if (inputAsInt <= savingsBalance) {
       savingsBalance -= inputAsInt
+      //below inserts balance into span to be displayed
       visualizeBalance(savingsBalance)
+      //if function successfully ran, hide previous user notifcations
       hideNotification()
       moneyColor("#6C9A74")
     } else {
@@ -68,8 +73,11 @@ function withdrawMoney() {
   } else if (inputAsInt > 0 && event.target.parentNode.id == 'checking') {
     if (inputAsInt <= checkingBalance) {
       checkingBalance -= inputAsInt
+      //below inserts balance into span to be displayed
       visualizeBalance(checkingBalance)
+      //if function successfully ran, hide previous user notifcations
       hideNotification()
+      moneyColor("#6C9A74")
     } else {
       moneyColor("#F52F4F")
       notifyUser('YOU HAVE INSUFFICIENT FUNDS')
@@ -79,14 +87,17 @@ function withdrawMoney() {
     }
 }
 
-function moneyColor(color = "green") {
+//will change color of background-color of display divs
+function moneyColor(color = "#6C9A74") {
   document.querySelector(`#${event.target.parentNode.id}`).style['background-color'] = color
 }
 
+//will hide notification if previously displayed
 function hideNotification() {
   document.querySelector('#notify-text').style.visibility = "hidden"
 }
 
+//will display balance in appropriate span
 function visualizeBalance(balance) {
   document.querySelector(`#${event.target.parentNode.id} > .balance > span`).innerText = balance
 }

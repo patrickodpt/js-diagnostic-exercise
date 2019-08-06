@@ -16,9 +16,6 @@ let savingsAccount = {
   },
 }
 
-
-
-
 let checkingCustomerInput = parseInt(document.querySelector('#checking-input').value)
 console.log(checkingCustomerInput)
 
@@ -28,24 +25,30 @@ let checkingAccount = {
   name: "Checking Account",
   amount: 0,
   customerInput: checkingCustomerInput,
-  withdrawFunc: function (requestedAmount) {
+  withdraw: function (requestedAmount) {
     if (this.amount > requestedAmount) {
       return this.amount -= requestedAmount
     } else {
       return requestedAmount
     }
   },
-  withdrawButton: document.querySelector('#checking-withdraw'),
-  depositFunc: function (providedAmount) {
+  deposit: function (providedAmount) {
       return this.amount += providedAmount
-  },
-  depositButton: document.querySelector('#checking-deposit'),
+  }
 }
 
 function checkingDespoitFunction(value) {
   checkingAccount.depositFunc(value)
   console.log("CHECKING DEPOSIT BUTTON WAS CLICKED")
 }
+
+//need to get input from user when button is CLICKED
+// could abstract button click event listener seperate from input call
+//
+
+
+
+
 
 //get input from user:
 // document.querySelector('#savings > .deposit').addEventListener('click', adjustBalance)
